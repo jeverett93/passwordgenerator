@@ -19,10 +19,10 @@ var lengthValue;
 
 // Write password to the #password input
 function writePassword() {
-  
+
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
+  console.log(password);
   passwordText.value = password;
 
 
@@ -30,83 +30,77 @@ function writePassword() {
 
 // Generating password with a function. Creates the prompts and confirms user must go through to create password
 function generatePassword() {
-  var length = prompt("Choose your password length. It must be least 8 characters and no more than 128 characters");
+  var length = getPasswordLength()
   var lowerCase = confirm("Do you want lowercase letters?");
   var upperCase = confirm("Do you want uppercase letters?");
   var numbers = confirm("Do you want Numbers?");
   var special = confirm("Do you want special characters?");
   var passwordValue = [];
-  
-
 
   // Password length based on user prompt input
-if (length >=8 && length <=128) {
-  lengthValue = parseInt(length);
-}
-else {
-  while (
-    length !== null &&
-    (isNaN(lengthValue))
-  )
-  {
-  alert ("Password length must be a number and 8 to 128 characters");
-  lengthValue = prompt(length);
-}
-}
 
-//Lower case values based on user confirm input
-if (lowerCase === true) {
-  lowerCaseValue = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-
-  for (i = 0; i < lowerCaseValue.length; i++) {
-    passwordValue.push(lowerCaseValue[i]);
+  function getPasswordLength() {
+    var input = prompt("Choose your password length. It must be least 8 characters and no more than 128 characters");
+    while (isNaN(input) || parseInt(input) > 128 || parseInt(input) < 8) {
+      var input = prompt("Try again. It must be least 8 characters and no more than 128 characters");
+    }
+    return input
   }
 
+  // console.log(passwordValue.length);
+  // console.log(passwordValue.length === 0);
+  generatePasswordOptions()
+  while (passwordValue.length === 0) {
+    alert("Please make a selection")
+    var lowerCase = confirm("Do you want lowercase letters?");
+    var upperCase = confirm("Do you want uppercase letters?");
+    var numbers = confirm("Do you want Numbers?");
+    var special = confirm("Do you want special characters?");
+    generatePasswordOptions()
   }
 
+  function generatePasswordOptions() {
+    //Lower case values based on user confirm input
+    lowerCaseValue = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    if (lowerCase) {
+      lowerCaseValue.forEach(function(option){
+        passwordValue.push(option)
+      })
+    }
 
-// Uppercase values based on user input
-if (upperCase === true) {
-upperCaseValue = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    // Uppercase values based on user input
+    upperCaseValue = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    if (upperCase) {
+      upperCaseValue.forEach(function(option){
+        passwordValue.push(option)
+      })
+    }
 
-for (i = 0; i < upperCaseValue.length; i++) {
-  passwordValue.push(upperCaseValue[i]);
-}
+    // Numbers values based on user confirm input
+    numbersValue = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    if (numbers) {
+      numbersValue.forEach(function(option){
+        passwordValue.push(option)
+      })
+    }
 
-}
+    // Special Characters values based on user confirm input
+    specialValue = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "-", "+", "=", "{", "[", "}", "]", ":", ";", "'", "<", ">", "?", "/", "`", "~"];
+    if (special) {
+      specialValue.forEach(function(option){
+        passwordValue.push(option)
+      })
+    }
 
-// Numbers values based on user confirm input
-if (numbers === true) {
-numbersValue = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
-for (i = 0; i < numbersValue.length; i++) {
-  passwordValue.push(numbersValue[i]);
-}
-
-}
-
-// Special Characters values based on user confirm input
-if (special === true) {
-specialValue = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "-", "+", "=", "{", "[", "}", "]", ":", ";", "'", "<", ">", "?", "/", "`", "~"];
-
-  for (i = 0; i < specialValue.length; i++) {
-  passwordValue.push(specialValue[i]);
-}
-
-
-}
-
+  }
 
 // Create for loop that loops through criteria and concatenates them randomly
+  var newPassword = ""
+  for(var i = 0; i < length; i++){
+    newPassword += passwordValue[Math.floor(Math.random() * passwordValue.length)];
+  }
 
-var newPassword = ""
-
-for(var i = 0; i < lengthValue; i++){
-  newPassword += passwordValue[Math.floor(Math.random() * passwordValue.length)];
-
-}
-
-return newPassword;
+  return newPassword;
 
 }
 
