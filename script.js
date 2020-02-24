@@ -1,13 +1,3 @@
-// Pseudo Code
-// Click generate password button and see prompts for password criteria.
-// First ask for password length between 8-128 characters
-// Validate user selection
-// Then ask if they want lowercase letters and validate user selection.
-// Then ask if they want uppercase letters and validate user selection.
-// Then ask if they want numbers and validate user selection.
-// Then ask if they want special characters and validate user selection.
-// Once user had made all their selections, a password generates either in an alert or written on the page using all the criteria the user selected.
-
 // Pulls generate id from HTML and gives password criterion an empty value
 var generateBtn = document.querySelector("#generate");
 var lowerCaseValue;
@@ -17,7 +7,7 @@ var specialValue;
 var lengthValue;
 
 
-// Write password to the #password input
+// Function to write password onto the page.
 function writePassword() {
   
   var password = generatePassword();

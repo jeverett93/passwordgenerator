@@ -138,8 +138,3 @@ button[disabled] {
   }
 }
 
-@media (max-width: 320px) {
-  .card{
-    margin-bottom: 50px;
-  }
-}
